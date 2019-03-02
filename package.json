@@ -1,7 +1,7 @@
 {
   "name": "morfine",
   "version": "0.0.0",
-  "description": "Pure, stateless nanomorph wrapper",
+  "description": "Pure, stateless wrapper around nanomorph",
   "main": "index.js",
   "scripts": {
     "test": "standard",
