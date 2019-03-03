@@ -28,7 +28,7 @@ function morfine (renderer) {
 
 // (DOMNode) -> void, throws Error
 function _checkElement (el) {
-  if (typeof el !== 'object' || !el.tagName) {
+  if (typeof window !== 'undefined' && (typeof el !== 'object' || !el.tagName)) {
     throw new Error('morfine: renderer must return a DOM node')
   }
 }
