@@ -51,6 +51,22 @@ test('server side rendering', function (t) {
     t.equal(after.callCount(), 1, 'after was called')
     t.deepEqual([wrapper.el], after.lastArgs(), 'the current elements is passed to afterrender')
   })
+
+  t.test('lifecycle methods are added on construction', function (t) {
+    var before = fake()
+    var after = fake()
+
+    var wrapper = morfine(renderer, before, after)
+
+    t.plan(4)
+    t.equal(after.callCount(), 1, 'after was called')
+
+    wrapper.r()
+
+    t.equal(before.callCount(), 1, 'before was called')
+    t.equal(after.callCount(), 2, 'after was called again')
+    t.deepEqual([wrapper.el], after.lastArgs(), 'the current elements is passed to afterrender')
+  })
 })
 
 function renderer () {

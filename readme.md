@@ -46,8 +46,8 @@ window.rerender = wrapper.rerender
 ```
 
 ## API
-#### `wrapper = morfine(renderer)`
-Takes a `renderer` function that returns a `Node` (manually defined or from [`nanohtml`](https://github.com/choojs/nanohtml) for example). Returns a `wrapper` object.
+#### `wrapper = morfine(renderer[, beforerender, afterrender])`
+Takes a `renderer` function that returns a `Node` (manually defined or from [`nanohtml`](https://github.com/choojs/nanohtml) for example). Optionally you can set the lifecycle methods here. You must do this if calling `afterrender` on the first render is needed. Returns a `wrapper` object.
 
 #### `wrapper.el`
 The `Node` itself. This is what you add to the `body`.

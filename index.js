@@ -3,8 +3,8 @@ var assert = require('assert')
 
 module.exports = morfine
 
-// (fn) -> Wrapper {el: DOMNode, rerender || r: fn, afterup}
-function morfine (renderer) {
+// (fn, ?beforerender, ?afterrender) -> Wrapper {el: DOMNode, rerender || r: fn, afterup}
+function morfine (renderer, beforerender, afterrender) {
   assert(typeof renderer === 'function', 'morfine: renderer must be a function')
 
   var wrapper = {}
@@ -13,13 +13,21 @@ function morfine (renderer) {
   wrapper.el = renderer()
   _checkElement(wrapper.el)
 
+  // add lifecycle methods
+  if (beforerender) wrapper.beforerender = beforerender
+  if (afterrender) {
+    wrapper.afterrender = afterrender
+    afterrender(wrapper.el)
+  }
+
   wrapper.r = wrapper.rerender = function () {
+    var el = wrapper.el // retain reference, as the ID might change on render
     var newtree = renderer()
     _checkElement(newtree)
 
     // call beforerender | do the update | call afterrender
     if (wrapper.beforerender) wrapper.beforerender(newtree)
-    var el = morph(wrapper.el, newtree)
+    morph(el, newtree)
     if (wrapper.afterrender) wrapper.afterrender(el)
   }
 
